@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "sustainx community",
+  "homepage": "https://github.com/Arjun-Shukla/SustainX#readme",
+  "bugs": {
+    "url": "https://github.com/Arjun-Shukla/SustainX/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arjun-Shukla/SustainX.git"
+  },
+  "license": "ISC",
+  "author": "Arjun Shukla",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

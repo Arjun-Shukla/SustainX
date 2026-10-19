@@ -1,8 +1,9 @@
-import { useState } from 'react'
 import './App.css'
 import './index.css'
 import Header from './components/header'
 import Navbar from './components/Navbar-aside'
+import Hero from './components/hero'
+import Servicebar from './components/service-bar'
 
 function App() {
 
@@ -13,6 +14,10 @@ function App() {
         <Header />
 
         <Navbar />
+
+        <Hero />
+
+        <Servicebar />
 
       </div>
 

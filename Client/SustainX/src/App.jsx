@@ -4,6 +4,7 @@ import Header from './components/header'
 import Navbar from './components/Navbar-aside'
 import Hero from './components/hero'
 import Servicebar from './components/service-bar'
+import Achievements from './components/Achievements'
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
         <Hero />
 
         <Servicebar />
+
+        <Achievements />
 
       </div>
 

@@ -5,6 +5,8 @@ import Navbar from './components/Navbar-aside'
 import Hero from './components/hero'
 import Servicebar from './components/service-bar'
 import Achievements from './components/Achievements'
+import Footer from './components/footer'
+import { Link } from 'react-router-dom'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
         <Servicebar />
 
         <Achievements />
+
+        <Footer />
 
       </div>
 

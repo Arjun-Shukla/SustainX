@@ -44,8 +44,8 @@ const ServiceCards = () => {
 
                 {/* Section heading */}
                 <div className="mb-10 text-center">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">
-                        <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                    <span className="inline-flex items-center gap-2 rounded-full border border-purple-500/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">
+                        {/* <span className="h-1.5 w-1.5 rounded-full bg-purple-400" /> */}
                         What We Offer
                     </span>
 

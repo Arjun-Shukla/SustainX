@@ -4,56 +4,56 @@ import React, { useEffect, useRef, useState } from "react";
 // LEFT SIDE ACHIEVEMENTS
 const leftAchievements = [
     {
-        title: "National Hackathon",
-        image: "/ach1.jpg",
+        title: "National Hackathon DTU",
+        image: "DTU.jpeg",
         description:
-            "Recognized for developing innovative solutions and showcasing technical excellence at a national-level hackathon.",
+            "Top 45 among 1500+ Teams at DTU",
     },
     {
-        title: "IIT Delhi",
-        image: "/ach2.jpg",
+        title: "National Hackathon ABES Ghaziabad",
+        image: "/ABES.jpeg",
         description:
-            "Participated in events and showcased creativity, teamwork and innovation at IIT Delhi.",
+            "Top 75 among 1000+ Teams at ABESIT",
     },
     {
-        title: "Open Source Contribution",
-        image: "/ach3.jpg",
+        title: "Project Showcase IIT Roorkee",
+        image: "/IITR.jpeg",
         description:
-            "Contributed to open-source projects, collaborated with developers and gained practical development experience.",
+            "Finalist for 2 Project Presentation at IIT Roorkee",
     },
     {
-        title: "Hackathon Finalist",
-        image: "/ach4.jpg",
+        title: "National Hackathon IIMT Meerut",
+        image: "/IIMT.jpeg",
         description:
-            "Achieved a finalist position among competing teams through innovative ideas and collaborative efforts.",
+            "Top 35 among 350+ Teams at IIMTU Meerut",
     },
 ];
 
 // RIGHT SIDE ACHIEVEMENTS
 const rightAchievements = [
     {
-        title: "DTU Hackathon",
-        image: "/ach5.jpg",
+        title: "RDV Finals IIT Delhi",
+        image: "/IITD.jpeg",
         description:
-            "Participated in a competitive hackathon at Delhi Technological University and explored innovative ideas.",
+            "Finalist for Faces of RDV, IIT Delhi",
     },
     {
-        title: "Community Leadership",
-        image: "/ach6.jpg",
+        title: "National Hackathon UEM Jaipur",
+        image: "/UEM.jpeg",
         description:
-            "Building and leading SustainX, bringing developers together to learn, collaborate and create.",
+            "Top 60 among 1100+ Teams at UEM Jaipur",
     },
     {
-        title: "Project Recognition",
-        image: "/ach7.jpg",
+        title: "National Hackathon IIT BHU",
+        image: "/IIT BHU.jpeg",
         description:
-            "Showcasing practical technology solutions through project development and collaborative innovation.",
+            "Top 50 among 1500+ Teams at IIT-BHU (Varanasi)",
     },
     {
-        title: "Technical Excellence",
-        image: "/ach8.jpg",
+        title: "National Hackathon HIET Ghaziabad",
+        image: "/HIET.jpeg",
         description:
-            "Continuously learning, experimenting with emerging technologies and building meaningful projects.",
+            "Top 37 among 400+ Teams at HIET Ghaziabad",
     },
 ];
 

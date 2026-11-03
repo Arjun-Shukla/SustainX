@@ -5,9 +5,7 @@ import { House, Info, Users, Mail } from 'lucide-react';
 const Sidebar = () => {
     const links = [
         { name: 'Home', href: '#home', Icon: House },
-        { name: 'About Us', href: '#about', Icon: Info },
-        { name: 'Our Teams', href: '#teams', Icon: Users },
-        { name: 'Contact Us', href: '#contact', Icon: Mail },
+        { name: 'Our Teams', href: '#', Icon: Users },
     ];
 
     return (

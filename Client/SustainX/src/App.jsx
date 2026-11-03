@@ -8,6 +8,8 @@ import Achievements from './components/Achievements'
 import Footer from './components/footer'
 import { Link } from 'react-router-dom'
 import OurTeams from './pages/teams'
+import Join from './pages/join'
+import TeamSelection from './pages/select'
 
 function App() {
 
@@ -27,7 +29,21 @@ function App() {
 
         <Footer />
 
-        <OurTeams />
+        {/* <OurTeams /> */}
+
+
+
+        <main className="ml-[330px] w-[calc(100%-330px)] min-h-[calc(100vh-104px)] overflow-x-hidden overflow-y-auto">
+
+          <Join />
+          
+        <TeamSelection />
+
+        </main>
+
+
+
+
 
       </div>
 

@@ -11,8 +11,8 @@ const Footer = () => {
         border-t border-[#29232f]
         px-8 md:px-12 lg:px-16
         pt-16 pb-8
-        lg:ml-[330px]
-        lg:w-[calc(100%-330px)]
+        lg:ml-64
+        lg:w-[calc(100%-16rem)]
         max-lg:ml-0
         max-lg:w-full
       "

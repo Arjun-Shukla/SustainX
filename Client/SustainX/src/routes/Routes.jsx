@@ -1,0 +1,32 @@
+import { createBrowserRouter } from 'react-router-dom'
+import Hero from '../components/hero'
+import Servicebar from '../components/service-bar'
+import Achievements from '../components/Achievements'
+import Join from '../pages/join'
+import TeamSelection from '../pages/select'
+import Login from '../pages/login'
+import Signup from '../pages/signup'
+import Teams from '../pages/teams'
+
+const Router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <>
+        <Hero />
+        <Servicebar />
+        <Achievements />
+        {/* <Join />
+        <TeamSelection />
+        <Login />
+        <Signup /> */}
+      </>
+    )
+  },
+  {
+    path: '/teams',
+    element: <Teams />
+  }
+])
+
+export default Router;

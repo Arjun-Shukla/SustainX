@@ -1,11 +1,12 @@
 import React from 'react';
 import { House, Info, Users, Mail } from 'lucide-react';
+import { NavLink, Link } from 'react-router-dom'
 
 
 const Sidebar = () => {
     const links = [
-        { name: 'Home', href: '#home', Icon: House },
-        { name: 'Our Teams', href: '#', Icon: Users },
+        { name: 'Home', href: "/", Icon: House },
+        { name: 'Our Teams', href: "/teams", Icon: Users },
     ];
 
     return (
@@ -26,37 +27,36 @@ const Sidebar = () => {
                 <ul className="space-y-3">
                     {links.map(({ name, href, Icon }, index) => (
                         <li key={name}>
-                            <a
-                                href={href}
-                                className={`group relative flex items-center gap-4 overflow-hidden rounded-xl border px-4 py-3.5 transition-all duration-300 ease-out
-                  ${index === 0
+                            <NavLink
+                                to={href}
+                                end={href === "/"}
+                                className={({ isActive }) =>
+                                    `group relative flex items-center gap-4 overflow-hidden rounded-xl border px-4 py-3.5 transition-all duration-300 ease-out
+        ${isActive
                                         ? 'border-purple-500/30 bg-purple-500/10 text-purple-200 shadow-[inset_0_0_20px_rgba(168,85,247,0.04)]'
                                         : 'border-transparent text-gray-400 hover:translate-x-1 hover:border-purple-500/20 hover:bg-purple-500/[0.08] hover:text-white'
-                                    }`}
+                                    }`
+                                }
                             >
-                                {/* Hover accent */}
-                                <span className={`absolute inset-y-2 left-0 w-[3px] rounded-full bg-purple-400 transition-opacity duration-300 ${index === 0
-                                    ? 'opacity-100'
-                                    : 'opacity-0 group-hover:opacity-100'
-                                    }`} />
+                                <span
+                                    className={({ isActive }) =>
+                                        `absolute inset-y-2 left-0 w-[3px] rounded-full bg-purple-400 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                                        }`
+                                    }
+                                />
 
                                 <Icon
                                     size={19}
                                     strokeWidth={1.8}
-                                    className={`shrink-0 transition-all duration-300 ${index === 0
-                                        ? 'text-purple-300'
-                                        : 'text-gray-500 group-hover:scale-110 group-hover:text-purple-300'
-                                        }`}
+                                    className="shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:text-purple-300"
                                 />
 
                                 <span className="text-sm font-medium tracking-wide">
                                     {name}
                                 </span>
 
-                                {index === 0 && (
-                                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-purple-400 shadow-[0_0_10px_rgba(192,132,252,0.9)]" />
-                                )}
-                            </a>
+                                {({ isActive }) => null}
+                            </NavLink>
                         </li>
                     ))}
                 </ul>

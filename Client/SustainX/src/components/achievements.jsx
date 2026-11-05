@@ -161,10 +161,6 @@ const Achievements = () => {
     text-white
     py-24
     px-8 md:px-12
-    lg:ml-[330px]
-    lg:w-[calc(100%-330px)]
-    max-lg:ml-0
-    max-lg:w-full
   "
         >
 

@@ -11,7 +11,10 @@ const Hero = () => {
 
             <section
                 id="home"
-                className="relative min-h-[calc(100vh-5rem)] overflow-hidden px-5 py-16 sm:px-8 md:ml-64 lg:px-12"
+                className="relative min-h-[calc(100vh-5rem)] overflow-hidden px-5 py-16 opacity-100 animate-[fadeUp_0.7s_ease-out] sm:px-8 lg:px-12"
+                style={{
+                    animationFillMode: 'forwards'
+                }}
             >
                 {/* Ambient purple glow */}
                 <div className="pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-purple-600/15 blur-[120px] sm:h-96 sm:w-96" />

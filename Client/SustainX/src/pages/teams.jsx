@@ -560,10 +560,6 @@ const OurTeams = () => {
         bg-[#080808] text-white
         px-6 md:px-10 lg:px-14
         py-20
-        lg:ml-[330px]
-        lg:w-[calc(100%-330px)]
-        max-lg:ml-0
-        max-lg:w-full
       "
         >
 

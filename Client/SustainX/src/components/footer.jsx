@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -124,8 +124,8 @@ const Footer = () => {
               gap-y-5
             ">
 
-              <a
-                href="/"
+              <NavLink
+                to="/"
                 className="
                   text-sm
                   font-medium
@@ -136,24 +136,10 @@ const Footer = () => {
                 "
               >
                 Home
-              </a>
+              </NavLink>
 
-              <a
-                href="/about"
-                className="
-                  text-sm
-                  font-medium
-                  text-gray-300
-                  transition-colors
-                  duration-300
-                  hover:text-purple-400
-                "
-              >
-                About Us
-              </a>
-
-              <a
-                href="/teams"
+              <NavLink
+                to="/teams"
                 className="
                   text-sm
                   font-medium
@@ -164,7 +150,7 @@ const Footer = () => {
                 "
               >
                 Our Teams
-              </a>
+              </NavLink>
 
             </div>
           </div>

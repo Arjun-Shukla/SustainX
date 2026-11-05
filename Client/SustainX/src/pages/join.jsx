@@ -1,7 +1,7 @@
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Check, Rocket, Zap, Crown, ArrowRight } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 const plans = [
     {
@@ -45,26 +45,44 @@ const plans = [
 
 const Join = () => {
     //   const navigate = useNavigate();
+
+    // const {
+
+    //     register,
+    //     handleSubmit,
+    //     formState: { errors, isSubmitting },
+
+    // } = useForm();
+
     const [selectedPlan, setSelectedPlan] = useState("plus");
+    const [submit , setSubmit] = useState(false);
 
     const handleNext = () => {
-        const plan = plans.find((p) => p.id === selectedPlan);
 
-        navigate("/subscription/checkout", {
-            state: {
-                plan: plan.name,
-                price: plan.price,
-                planId: plan.id,
+        setSubmit(true);
+
+        fetch('/join', {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
             },
-        });
+
+            body: JSON.stringify(
+                {
+                    plan: selectedPlan
+                }
+            )
+        })
     };
 
     return (
         <div className="min-h-screen w-full bg-[#080611] text-white relative overflow-hidden flex flex-col items-center justify-center px-5 py-16">
 
             {/* Background Effects */}
-            <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-700/30 blur-[130px] rounded-full pointer-events-none" />
-            <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-fuchsia-700/30 blur-[130px] rounded-full pointer-events-none" />
+            {/* <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-700/30 blur-[130px] rounded-full pointer-events-none" /> */}
+            {/* <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-fuchsia-700/30 blur-[130px] rounded-full pointer-events-none" /> */}
 
             {/* Heading */}
             <div className="relative z-10 text-center mb-14">
@@ -156,8 +174,8 @@ const Join = () => {
                             <div className="mt-7 flex items-center gap-2 text-sm">
                                 <div
                                     className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected
-                                            ? "border-purple-400 bg-purple-500"
-                                            : "border-gray-500"
+                                        ? "border-purple-400 bg-purple-500"
+                                        : "border-gray-500"
                                         }`}
                                 >
                                     {isSelected && (
@@ -177,16 +195,25 @@ const Join = () => {
 
             {/* Next Button */}
             <div className="relative z-10 mt-14">
-                <button
-                    onClick={handleNext}
-                    className="group flex items-center gap-3 px-16 py-4 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold text-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 cursor-pointer"
-                >
-                    Next
-                    <ArrowRight
-                        size={22}
-                        className="group-hover:translate-x-1 transition-transform"
-                    />
-                </button>
+
+            {submit ? <div>Loading</div> : ""}
+
+                <NavLink to="/select">
+
+                    <button
+                        onClick={handleNext}
+                        disabled={submit}
+                        className="group flex items-center gap-3 px-16 py-4 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold text-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 cursor-pointer"
+                    >
+                        Next
+                        <ArrowRight
+                            size={22}
+                            className="group-hover:translate-x-1 transition-transform"
+                        />
+                    </button>
+
+                </NavLink>
+
             </div>
 
         </div>

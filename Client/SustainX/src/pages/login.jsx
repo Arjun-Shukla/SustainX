@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { LockKeyhole, UserRound, ArrowRight } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -16,8 +17,8 @@ const Login = () => {
         <div className="relative w-full h-full min-h-0 overflow-y-auto bg-[#080611] text-white flex items-center justify-center px-5 py-10">
 
             {/* Background Effects */}
-            <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-100px] right-[-80px] w-[300px] h-[300px] bg-fuchsia-600/10 blur-[120px] rounded-full pointer-events-none" />
+            {/* <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" /> */}
+            {/* <div className="absolute bottom-[-100px] right-[-80px] w-[300px] h-[300px] bg-fuchsia-600/10 blur-[120px] rounded-full pointer-events-none" /> */}
 
             {/* Login Card */}
             <div className="relative w-full max-w-[430px]">
@@ -110,13 +111,20 @@ const Login = () => {
                 <div className="text-center mt-6">
                     <p className="text-sm text-gray-400">
                         New to SustainX?{" "}
-                        <button
-                            type="button"
-                            onClick={() => navigate("/register")}
-                            className="text-purple-400 font-semibold hover:text-fuchsia-400 transition-colors cursor-pointer"
-                        >
-                            Create Account Now
-                        </button>
+
+                        <NavLink to="/signup">
+
+                            <button
+                                type="button"
+                                onClick={() => navigate("/register")}
+                                className="text-purple-400 font-semibold hover:text-fuchsia-400 transition-colors cursor-pointer"
+                            >
+                                Create Account Now
+                            </button>
+
+                        </NavLink>
+
+
                     </p>
                 </div>
 

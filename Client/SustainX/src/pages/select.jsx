@@ -24,6 +24,7 @@ const contributionHours = [
 const TeamSelection = () => {
     const [selectedTeams, setSelectedTeams] = useState([]);
     const [selectedHours, setSelectedHours] = useState("");
+    const [submit , setSubmit] = useState(false);
 
     const handleTeamSelection = (team) => {
         setSelectedTeams((prev) =>
@@ -46,10 +47,25 @@ const TeamSelection = () => {
             return;
         }
 
+        setSubmit(true);
+
         const formData = {
             teams: selectedTeams,
             contributionHours: selectedHours,
         };
+
+        fetch('/select', {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(formData)
+
+        })
 
         console.log("SustainX Registration:", formData);
 
@@ -60,9 +76,9 @@ const TeamSelection = () => {
         <div className="relative w-full h-full min-h-0 bg-[#080611] text-white overflow-x-hidden overflow-y-auto px-5 sm:px-8 lg:px-12 py-10">
 
             {/* Background Effects */}
-            <div className="absolute top-0 left-0 w-80 h-80 bg-purple-700/20 blur-[130px] rounded-full pointer-events-none" />
+            {/* <div className="absolute top-0 left-0 w-80 h-80 bg-purple-700/20 blur-[130px] rounded-full pointer-events-none" /> */}
 
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-fuchsia-700/20 blur-[140px] rounded-full pointer-events-none" />
+            {/* <div className="absolute bottom-0 right-0 w-96 h-96 bg-fuchsia-700/20 blur-[140px] rounded-full pointer-events-none" /> */}
 
             <div className="relative z-10 max-w-5xl mx-auto">
 
@@ -123,7 +139,7 @@ const TeamSelection = () => {
                                     className={`
                     relative min-h-[85px] rounded-2xl px-5 py-4
                     border text-left transition-all duration-300
-                    flex items-center justify-between gap-3
+                    flex items-center justify-between gap-3 cursor-pointer
                     ${isSelected
                                             ? "border-purple-500 bg-purple-600/15 shadow-[0_0_20px_rgba(168,85,247,0.15)]"
                                             : "border-white/10 bg-white/[0.03] hover:border-purple-400/50 hover:bg-purple-500/[0.07]"
@@ -185,7 +201,7 @@ const TeamSelection = () => {
                                     className={`
                     rounded-2xl py-5 px-3 border
                     transition-all duration-300
-                    flex flex-col items-center justify-center gap-3
+                    flex flex-col items-center justify-center gap-3 cursor-pointer
                     ${isSelected
                                             ? "border-purple-500 bg-purple-600/20 text-purple-200 shadow-[0_0_20px_rgba(168,85,247,0.15)]"
                                             : "border-white/10 bg-white/[0.03] text-gray-400 hover:border-purple-400/50 hover:text-white"
@@ -211,9 +227,12 @@ const TeamSelection = () => {
                 {/* Submit Button */}
                 <div className="flex justify-center pb-8">
 
+                    {submit ? <div>Loading</div> : ""}
+
                     <button
                         type="button"
                         onClick={handleSubmit}
+                        disabled={submit}
                         className="group flex items-center justify-center gap-3 px-14 py-4 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold text-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 cursor-pointer"
                     >
                         Submit

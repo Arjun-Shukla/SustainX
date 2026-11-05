@@ -1,6 +1,7 @@
 import react from 'react'
 import { LogIn } from 'lucide-react';
 import logo from '../assets/sustainx-logo.png'
+import { NavLink } from 'react-router-dom'
 
 const Header = () => {
 
@@ -37,16 +38,21 @@ const Header = () => {
                     {/* {right} */}
 
 
-                    <button
-                        className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
-                    >
-                        <LogIn
-                            size={18}
-                            strokeWidth={2}
-                            className="transition-transform duration-300 group-hover:translate-x-0.5"
-                        />
-                        <span>Login</span>
-                    </button>
+                    <NavLink to="/login">
+
+                        <button
+                            className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
+                        >
+                            <LogIn
+                                size={18}
+                                strokeWidth={2}
+                                className="transition-transform duration-300 group-hover:translate-x-0.5"
+                            />
+                            <span>Login</span>
+                        </button>
+
+
+                    </NavLink>
 
 
                 </div>

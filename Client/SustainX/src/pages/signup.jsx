@@ -8,6 +8,7 @@ import {
     ArrowRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Signup = () => {
     // const navigate = useNavigate();
@@ -95,8 +96,8 @@ const Signup = () => {
         <div className="relative w-full h-full min-h-0 overflow-y-auto bg-[#080611] text-white flex items-center justify-center px-5 py-10">
 
             {/* Background Effects */}
-            <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-100px] right-[-80px] w-[300px] h-[300px] bg-fuchsia-600/10 blur-[120px] rounded-full pointer-events-none" />
+            {/* <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" /> */}
+            {/* <div className="absolute bottom-[-100px] right-[-80px] w-[300px] h-[300px] bg-fuchsia-600/10 blur-[120px] rounded-full pointer-events-none" /> */}
 
             {/* Registration Container */}
             <div className="relative w-full max-w-[480px] my-auto">
@@ -178,13 +179,19 @@ const Signup = () => {
                 {/* Login Redirect */}
                 <p className="text-center text-sm text-gray-400 mt-6">
                     Already have an account?{" "}
-                    <button
-                        type="button"
-                        onClick={() => navigate("/login")}
-                        className="text-purple-400 font-semibold hover:text-fuchsia-400 transition-colors cursor-pointer"
-                    >
-                        Login Now
-                    </button>
+
+                    <NavLink to="/login">
+
+                        <button
+                            type="button"
+                            onClick={() => navigate("/login")}
+                            className="text-purple-400 font-semibold hover:text-fuchsia-400 transition-colors cursor-pointer"
+                        >
+                            Login Now
+                        </button>
+
+                    </NavLink>
+
                 </p>
 
                 <p className="text-center text-xs text-gray-600 mt-6">

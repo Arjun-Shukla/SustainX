@@ -1,6 +1,7 @@
 import logo from "../assets/sustainx-logo.png";
 import React from "react";
 import { Trophy, Network, Code2, ArrowUpRight } from 'lucide-react';
+import {NavLink} from 'react-router-dom'
 
 
 const Hero = () => {
@@ -62,15 +63,15 @@ const Hero = () => {
 
                     {/* Call to action */}
                     <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
-                        <a
-                            href="#about"
+                        <NavLink
+                            to="/join"
                             className="group inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-7 py-3.5 font-semibold text-white shadow-[0_0_25px_rgba(168,85,247,0.2)] transition duration-300 hover:-translate-y-1 hover:bg-purple-500 hover:shadow-[0_0_35px_rgba(168,85,247,0.4)]"
                         >
                             Discover SustainX
                             <span className="transition-transform duration-300 group-hover:translate-x-1">
                                 →
                             </span>
-                        </a>
+                        </NavLink>
 
                         {/* <a
                             href="#teams"

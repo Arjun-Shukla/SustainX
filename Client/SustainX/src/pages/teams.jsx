@@ -8,7 +8,7 @@ const mentors = [
     {
         name: "Shashank Upadhyay",
         role: "Community Mentor",
-        image: "/mentor1.jpg",
+        image: "/shashank bhaiya3.jpeg",
         description: "MTech (MST) \nIIT-BHU (Varanasi) \nTPR @IIT-BHU \n Ex-Mentor @Unstop",
         linkedin: "#",
         github: "#",
@@ -16,7 +16,7 @@ const mentors = [
     {
         name: "Prince Gupta",
         role: "Community Mentor",
-        image: "/mentor2.jpg",
+        image: "/prince bhaiya.jpeg",
         description: "BTech (CS) -IV \nNDRF LOR \nEx-Intern @Skool24",
         linkedin: "#",
         github: "#",
@@ -24,7 +24,7 @@ const mentors = [
     {
         name: "Satvika Panwar",
         role: "Community Mentor",
-        image: "/mentor3.jpeg",
+        image: "/Satvika2.jpeg",
         description: "BTech (CS) -IV \nSheFi Scholar S13 \nGSSoC 25",
         linkedin: "#",
         github: "#",
@@ -60,7 +60,7 @@ const coFounders = [
     {
         name: "Aakash Gupta",
         role: "Co-Founder",
-        image: "/cofounder2-new.jpeg",
+        image: "/cofounder2-new2.jpeg",
         description: "BTech (CS) -III \n7x National Hackathon Finalist \nIIT Roorkee Finalist \nIIT-BHU Finalist \n GSSoC 26",
         linkedin: "#",
         github: "#",
@@ -113,7 +113,7 @@ const teams = [
         leader: {
             name: "Khushi Yadav",
             role: "Team Lead",
-            image: "/aiml-leader.jpg",
+            image: "/aiml.jpeg",
             description: "Exploring artificial intelligence and machine learning through research, experimentation and practical projects.",
             linkedin: "#",
             github: "#",
@@ -141,7 +141,7 @@ const teams = [
         subLeader: {
             name: "Shehzan Hussain",
             role: "Co-Lead",
-            image: "/java-subleader.jpeg",
+            image: "/shehzan.jpeg",
             description: "Supporting development activities and collaborative learning within the Java team.",
             linkedin: "#",
             github: "#",
@@ -153,7 +153,7 @@ const teams = [
         leader: {
             name: "Priyanshi Srivastava",
             role: "Team Lead",
-            image: "/app-leader.jpg",
+            image: "/app1.jpeg",
             description: "Leading mobile application development and exploring innovative app experiences.",
             linkedin: "#",
             github: "#",
@@ -173,7 +173,7 @@ const teams = [
         leader: {
             name: "Vanshika Dutt Srivastava",
             role: "Team Lead",
-            image: "/women-tech-leader.jpg",
+            image: "/women1.jpeg",
             description: "Encouraging women in technology through collaboration, opportunities, mentorship and community initiatives.",
             linkedin: "#",
             github: "#",
@@ -199,9 +199,9 @@ const teams = [
             github: "#",
         },
         subLeader: {
-            name: "Co-Lead Name",
+            name: "Pratyank Trivedi",
             role: "Co-Lead",
-            image: "/research-subleader.jpg",
+            image: "/naman.jpeg",
             description: "Supporting research activities, experimentation and collaborative innovation.",
             linkedin: "#",
             github: "#",
@@ -211,17 +211,17 @@ const teams = [
     {
         name: "DSA Team",
         leader: {
-            name: "Leader Name",
+            name: "Pawan Maurya",
             role: "Team Lead",
-            image: "/dsa-leader.jpg",
+            image: "/pawan.jpeg",
             description: "Helping members strengthen problem-solving abilities through data structures and algorithms.",
             linkedin: "#",
             github: "#",
         },
         subLeader: {
-            name: "Co-Lead Name",
+            name: "Amit Singh",
             role: "Co-Lead",
-            image: "/dsa-subleader.jpg",
+            image: "/amit.jpeg",
             description: "Supporting coding practice, problem-solving sessions and algorithmic learning.",
             linkedin: "#",
             github: "#",
@@ -239,7 +239,7 @@ const teams = [
             github: "#",
         },
         subLeader: {
-            name: "Co-Lead Name",
+            name: "Co-Lead",
             role: "Co-Lead",
             image: "/robotics-subleader.jpg",
             description: "Supporting hands-on experiments, prototyping and collaborative robotics projects.",
@@ -259,9 +259,9 @@ const teams = [
             github: "#",
         },
         subLeader: {
-            name: "Co-Lead Name",
+            name: "Vanshika Bharti",
             role: "Co-Lead",
-            image: "/design-subleader.jpg",
+            image: "/design2.jpeg",
             description: "Supporting creative execution, visual design and collaborative branding initiatives.",
             linkedin: "#",
             github: "#",

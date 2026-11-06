@@ -5,9 +5,29 @@ import { NavLink } from "react-router-dom";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [submit, setSubmit] = useState(false);
 
     const handleLogin = (e) => {
         e.preventDefault();
+
+        const loginData = {
+
+            email: email,
+            password: password,
+
+        }
+
+        fetch('/login', {
+
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(loginData)
+
+        });
+
+        setSubmit(true);
 
         // Connect your login API here
         console.log({ email, password });
@@ -89,9 +109,12 @@ const Login = () => {
                             </div>
                         </div>
 
+                        {submit ? <div>Loging In</div> : ""}
+
                         {/* Login Button */}
                         <button
                             type="submit"
+                            disabled={submit}
                             className="group w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 shadow-lg shadow-purple-900/30 transition-all duration-300 hover:shadow-purple-700/30 hover:-translate-y-0.5 cursor-pointer"
                         >
                             Login Now

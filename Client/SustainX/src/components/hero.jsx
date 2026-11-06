@@ -37,7 +37,7 @@ const Hero = () => {
                     {/* Small label */}
                     <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-purple-400/20 px-4 py-2">
                         {/* <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" /> */}
-                        <span className="text-xs font-medium uppercase tracking-[0.22em] text-purple-200 sm:text-sm">
+                        <span className="text-xs font-medium uppercase tracking-[0.22em]  sm:text-sm">
                             Heyy Hackers !!
                         </span>
                     </div>

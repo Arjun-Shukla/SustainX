@@ -22,6 +22,8 @@ const Signup = () => {
         state: "",
     });
 
+    const [submit, setSubmit] = useState(false);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -33,6 +35,18 @@ const Signup = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+
+        fetch('/signup', {
+
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+
+        });
+
+        setSubmit(true);
 
         // Connect your registration API here
         console.log(formData);
@@ -161,9 +175,12 @@ const Signup = () => {
                             );
                         })}
 
+                        {submit ? <div>Creating Account</div> : ""}
+
                         {/* Create Account Button */}
                         <button
                             type="submit"
+                            disabled={submit}
                             className="group w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 shadow-lg shadow-purple-900/30 transition-all duration-300 hover:shadow-purple-700/30 hover:-translate-y-0.5 mt-3 cursor-pointer"
                         >
                             Create Account
@@ -184,7 +201,7 @@ const Signup = () => {
 
                         <button
                             type="button"
-                            onClick={() => navigate("/login")}
+                            // onClick={() => navigate("/login")}
                             className="text-purple-400 font-semibold hover:text-fuchsia-400 transition-colors cursor-pointer"
                         >
                             Login Now

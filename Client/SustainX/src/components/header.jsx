@@ -13,8 +13,8 @@ const Header = () => {
 
                     {/* {left} */}
 
-                    <a
-                        href="/"
+                    <NavLink
+                        to="/"
                         className="flex h-18 w-18 shrink-0 items-center overflow-hidden rounded-2xl border border-purple-500/30"
                     >
                         <img
@@ -22,7 +22,7 @@ const Header = () => {
                             alt="SustainX"
                             className="h-full w-full rounded-2xl object-contain"
                         />
-                    </a>
+                    </NavLink>
 
                     {/* {center} */}
 

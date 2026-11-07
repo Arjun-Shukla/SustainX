@@ -1,8 +1,9 @@
 const express = require('express');
+const DBConnect = require('../Config/db');
 
 const app = express();
 
-console.log("Hellooooo");
+DBConnect();
 
 app.get('/' , (req,res) => {
     res.send("Healthy");

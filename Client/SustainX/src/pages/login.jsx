@@ -7,7 +7,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [submit, setSubmit] = useState(false);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
         const loginData = {
@@ -16,21 +16,39 @@ const Login = () => {
             password: password,
 
         }
-
-        fetch('/login', {
-
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(loginData)
-
-        });
-
         setSubmit(true);
 
-        // Connect your login API here
-        console.log({ email, password });
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData),
+            });
+
+            const text = await response.text();
+            let data = null;
+
+            if (text) {
+                try {
+                    data = JSON.parse(text);
+                } catch (parseError) {
+                    console.error('Invalid login response:', text);
+                    throw new Error('Server returned an invalid response');
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error(data?.message || 'Login failed');
+            }
+
+            setSubmit(false);
+            alert(data?.message || 'Login successful');
+        } catch (err) {
+            setSubmit(false);
+            alert(err.message || 'Error logging in');
+        }
     };
 
     return (

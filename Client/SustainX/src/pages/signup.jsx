@@ -33,23 +33,44 @@ const Signup = () => {
         }));
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-
-        fetch('/signup', {
-
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-
-        });
 
         setSubmit(true);
 
-        // Connect your registration API here
-        console.log(formData);
+        try {
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const text = await response.text();
+            let data = null;
+
+            if (text) {
+                try {
+                    data = JSON.parse(text);
+                } catch (parseError) {
+                    console.error('Non-JSON response received:', text);
+                    throw new Error('Server returned an invalid response. Check if the backend is running.');
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error(data?.error || data?.message || 'Signup failed');
+            }
+
+            console.log('User created:', data?.user);
+            alert('Account created successfully');
+            setSubmit(false);
+        } catch (error) {
+            console.error('Signup error:', error);
+            alert(error.message || 'Something went wrong while creating your account');
+            setSubmit(false);
+        }
     };
 
     const inputClass =

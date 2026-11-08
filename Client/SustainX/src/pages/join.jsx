@@ -55,26 +55,41 @@ const Join = () => {
     // } = useForm();
 
     const [selectedPlan, setSelectedPlan] = useState("plus");
-    const [submit , setSubmit] = useState(false);
+    const [submit, setSubmit] = useState(false);
+    const navigate = useNavigate();
 
-    const handleNext = () => {
-
+    const handleNext = async () => {
         setSubmit(true);
 
-        fetch('/join', {
+        try {
+            const response = await fetch('/api/join', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ plan: selectedPlan }),
+            });
 
-            method: "POST",
+            const text = await response.text();
+            let data = null;
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+            try {
+                data = text ? JSON.parse(text) : null;
+            } catch {
+                throw new Error('The server returned HTML instead of JSON. Make sure the backend is running on port 80 and the /api/join route is available.');
+            }
 
-            body: JSON.stringify(
-                {
-                    plan: selectedPlan
-                }
-            )
-        })
+            if (!response.ok || !data?.success) {
+                throw new Error(data?.message || 'Failed to save selected plan');
+            }
+
+            alert('Plan Selected');
+            navigate('/select');
+        } catch (err) {
+            alert(err?.message || 'Failed to continue');
+        } finally {
+            setSubmit(false);
+        }
     };
 
     return (
@@ -196,23 +211,20 @@ const Join = () => {
             {/* Next Button */}
             <div className="relative z-10 mt-14">
 
-            {submit ? <div>Loading</div> : ""}
+                {submit ? <div>Loading</div> : ""}
 
-                <NavLink to="/select">
-
-                    <button
-                        onClick={handleNext}
-                        disabled={submit}
-                        className="group flex items-center gap-3 px-16 py-4 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold text-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 cursor-pointer"
-                    >
-                        Next
-                        <ArrowRight
-                            size={22}
-                            className="group-hover:translate-x-1 transition-transform"
-                        />
-                    </button>
-
-                </NavLink>
+                <button
+                    type="button"
+                    onClick={handleNext}
+                    disabled={submit}
+                    className="group flex items-center gap-3 px-16 py-4 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold text-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                    {submit ? 'Loading...' : 'Next'}
+                    <ArrowRight
+                        size={22}
+                        className="group-hover:translate-x-1 transition-transform"
+                    />
+                </button>
 
             </div>
 

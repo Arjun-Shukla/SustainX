@@ -1,53 +1,51 @@
 import React, { useState } from "react";
 import { LockKeyhole, UserRound, ArrowRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submit, setSubmit] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
         const loginData = {
+            email,
+            password,
+        };
 
-            email: email,
-            password: password,
-
-        }
         setSubmit(true);
 
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(loginData),
             });
 
-            const text = await response.text();
-            let data = null;
-
-            if (text) {
-                try {
-                    data = JSON.parse(text);
-                } catch (parseError) {
-                    console.error('Invalid login response:', text);
-                    throw new Error('Server returned an invalid response');
-                }
-            }
+            const data = await response.json();
 
             if (!response.ok) {
                 throw new Error(data?.message || 'Login failed');
             }
 
-            setSubmit(false);
-            alert(data?.message || 'Login successful');
+            if (data.success || data.message?.toLowerCase().includes('login successful')) {
+                alert('Login successful');
+                navigate('/');
+            } else {
+                throw new Error(data?.message || 'Login failed');
+            }
+
         } catch (err) {
-            setSubmit(false);
             alert(err.message || 'Error logging in');
+        } finally {
+            setSubmit(false);
         }
     };
 

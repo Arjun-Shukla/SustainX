@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiUrl } from "../api";
 import { LockKeyhole, UserRound, ArrowRight } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +24,7 @@ const Login = () => {
         setSubmit(true);
 
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch(apiUrl('/api/login'), {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

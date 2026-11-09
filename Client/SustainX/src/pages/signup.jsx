@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiUrl } from "../api";
 import {
     UserRound,
     Mail,
@@ -39,7 +40,7 @@ const Signup = () => {
         setSubmit(true);
 
         try {
-            const response = await fetch('/api/signup', {
+            const response = await fetch(apiUrl('/api/signup'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

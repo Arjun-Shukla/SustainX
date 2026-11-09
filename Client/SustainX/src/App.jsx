@@ -1,5 +1,6 @@
 import './App.css'
 import './index.css'
+import { apiUrl } from './api'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Header from './components/header'
@@ -21,7 +22,7 @@ function RequireAuth({ children }) {
   useEffect(() => {
     const controller = new AbortController()
 
-    fetch('/api/users', {
+    fetch(apiUrl('/api/users'), {
       credentials: 'include',
       signal: controller.signal,
     })

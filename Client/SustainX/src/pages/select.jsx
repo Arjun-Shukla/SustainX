@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiUrl } from "../api";
 import { Check, Users, Clock, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -63,9 +64,10 @@ const TeamSelection = () => {
 
         try {
 
-            const response = await fetch('/api/select', {
+            const response = await fetch(apiUrl('/api/select'), {
 
                 method: "POST",
+                credentials: "include",
 
                 headers: {
 

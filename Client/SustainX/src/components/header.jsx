@@ -1,4 +1,5 @@
 import { LogIn, Menu, X } from 'lucide-react';
+import { apiUrl } from '../api';
 import logo from '../assets/sustainx-logo.png'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react';
@@ -12,7 +13,7 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
         const fetchUser = async () => {
             try {
-                const response = await fetch('/api/users', {
+                const response = await fetch(apiUrl('/api/users'), {
                     method: "GET",
                     credentials: "include"
                 });
@@ -52,7 +53,7 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
     const handleLogOut = async () => {
         try {
-            const response = await fetch('/api/logout', {
+            const response = await fetch(apiUrl('/api/logout'), {
                 method: "GET",
                 credentials: "include"
             });

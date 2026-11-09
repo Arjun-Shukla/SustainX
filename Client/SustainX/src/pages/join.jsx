@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Check, Rocket, Zap, Crown, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -64,7 +65,7 @@ const Join = () => {
         setSubmit(true);
 
         try {
-            const response = await fetch('/api/join', {
+            const response = await fetch(apiUrl('/api/join'), {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

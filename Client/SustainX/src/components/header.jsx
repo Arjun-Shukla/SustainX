@@ -4,9 +4,10 @@ import logo from '../assets/sustainx-logo.png'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
-const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
+const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
-    const [user, setUser] = useState(null);
+    const [logoutSubmitting, setLogoutSubmitting] = useState(false);
+    const [logoutMessage, setLogoutMessage] = useState("");
 
     useEffect(() => {
         let isMounted = true;
@@ -15,7 +16,8 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
             try {
                 const response = await fetch(apiUrl('/api/users'), {
                     method: "GET",
-                    credentials: "include"
+                    credentials: "include",
+                    cache: "no-store",
                 });
 
                 if (!response.ok) {
@@ -23,7 +25,6 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
                         throw new Error(`Failed to load user (${response.status}).`);
                     }
                     if (isMounted) {
-                        setUser(null);
                         onUserChange(null);
                     }
                     return;
@@ -31,13 +32,15 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
                 const data = await response.json();
                 if (isMounted) {
-                    setUser(data.user);
-                    onUserChange(data.user);
+                    onUserChange((currentUser) => ({
+                        ...data.user,
+                        plan: data.user.plan || currentUser?.plan || null,
+                        teamsSelected: data.user.teamsSelected || currentUser?.teamsSelected || false,
+                    }));
                 }
             } catch (err) {
                 console.error("Unable to load the logged-in user:", err);
                 if (isMounted) {
-                    setUser(null);
                     onUserChange(null);
                 }
             }
@@ -52,6 +55,7 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
     }, [onUserChange]);
 
     const handleLogOut = async () => {
+        setLogoutSubmitting(true);
         try {
             const response = await fetch(apiUrl('/api/logout'), {
                 method: "GET",
@@ -63,15 +67,30 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
                 throw new Error(data.message || `Logout failed (${response.status}).`);
             }
 
-            setUser(null);
             onUserChange(null);
             window.dispatchEvent(new Event('auth-change'));
-            alert(data.message);
+            setLogoutMessage("Logout successful.");
         } catch (err) {
             console.error("Unable to log out:", err);
-            alert(err.message || "Error logging out");
+            setLogoutMessage(err.message || "Error logging out");
+        } finally {
+            setLogoutSubmitting(false);
         }
     }
+
+    const planTier = user?.plan?.toLowerCase().includes('free')
+        ? 'FREE'
+        : user?.plan?.toLowerCase().includes('plus')
+            ? 'PLUS'
+            : user?.plan?.toLowerCase().includes('pro')
+                ? 'PRO'
+                : null;
+    const planLabel = planTier;
+    const planColors = {
+        FREE: 'border-emerald-400/40 bg-emerald-500/15 text-emerald-300',
+        PLUS: 'border-orange-400/40 bg-orange-500/15 text-orange-300',
+        PRO: 'border-purple-400/40 bg-purple-500/15 text-purple-300',
+    };
 
 
     return (
@@ -108,7 +127,19 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
                     <div className="flex items-center gap-2">
                         {
-                            user ? <button
+                            user ? <>
+                                {planTier && (
+                                    <span
+                                        title={planLabel}
+                                        className={`max-w-[5.5rem] truncate rounded-lg border px-2 py-2 text-[9px] font-bold tracking-wide sm:max-w-none sm:px-3 sm:text-xs sm:tracking-wider ${planColors[planTier]}`}
+                                    >
+                                        {planLabel}
+                                    </span>
+                                )}
+                                <button
+                                type="button"
+                                disabled={logoutSubmitting}
+                                aria-busy={logoutSubmitting}
                                 className="group flex max-w-24 items-center gap-2 truncate rounded-xl border border-purple-400/40 bg-purple-500/10 px-2 py-2.5 text-xs font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer sm:max-w-none sm:px-5 sm:text-sm"
                                 onClick={handleLogOut}
                             >
@@ -117,8 +148,20 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
                                     strokeWidth={2}
                                     className="hidden shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 sm:block"
                                 />
-                                <span className="truncate">{user.firstName || user.name || 'Account'}</span>
-                            </button> :
+                                <span className="relative truncate">
+                                    {logoutSubmitting ? "Logging out..." : user.firstName || user.name || 'Account'}
+                                    {logoutSubmitting && (
+                                        <span
+                                            role="progressbar"
+                                            aria-label="Logging out"
+                                            className="absolute inset-x-0 -bottom-2 h-1 overflow-hidden bg-white/20"
+                                        >
+                                            <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
+                                        </span>
+                                    )}
+                                </span>
+                                </button>
+                            </> :
 
                                 <NavLink to="/login" className="hidden sm:block">
                                     <button
@@ -148,6 +191,30 @@ const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
                 </div>
             </header>
+            {logoutMessage && (
+                <div
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
+                    role="presentation"
+                >
+                    <div
+                        role="alertdialog"
+                        aria-modal="true"
+                        aria-labelledby="logout-message"
+                        className="w-full max-w-md rounded-2xl border border-purple-400/30 bg-[#12101f] p-6 text-center shadow-[0_0_40px_rgba(168,85,247,0.2)]"
+                    >
+                        <p id="logout-message" className="text-base leading-relaxed text-purple-100">
+                            {logoutMessage}
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => setLogoutMessage("")}
+                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500"
+                        >
+                            Go
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
 
     );

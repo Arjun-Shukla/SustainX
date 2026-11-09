@@ -135,7 +135,7 @@ const Login = () => {
                             type="submit"
                             disabled={submit}
                             aria-busy={submit}
-                            className="group relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 py-3.5 font-semibold text-white shadow-lg shadow-purple-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-purple-700/30 disabled:cursor-wait disabled:opacity-80"
+                            className="group relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 py-3.5 font-semibold text-white shadow-lg shadow-purple-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-purple-700/30 disabled:cursor-wait disabled:opacity-80 cursor-pointer"
                         >
                             {submit ? 'Logging In...' : 'Login Now'}
                             <ArrowRight

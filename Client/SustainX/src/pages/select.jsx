@@ -23,11 +23,12 @@ const contributionHours = [
     "60+ Hours",
 ];
 
-const TeamSelection = () => {
+const TeamSelection = ({ onTeamsSelected = () => {} }) => {
     const [selectedTeams, setSelectedTeams] = useState([]);
     const [selectedHours, setSelectedHours] = useState("");
     const [submit, setSubmit] = useState(false);
     const [message, setMessage] = useState("");
+    const [teamsSaved, setTeamsSaved] = useState(false);
 
     const handleTeamSelection = (team) => {
         setSelectedTeams((prev) =>
@@ -84,12 +85,18 @@ const TeamSelection = () => {
                 throw new Error(data.message || "Unable to submit team selection.");
             }
 
+            const selectedPlan = data.plan || sessionStorage.getItem('selectedPlan');
             sessionStorage.removeItem('selectedPlanId');
-            navigate('/');
+            sessionStorage.removeItem('selectedPlan');
+            setTeamsSaved(true);
+            setMessage("Teams selected successfully \n You will be added to the Teams Shortly");
+            onTeamsSelected(selectedPlan, data.teamsSelected ?? true);
+            window.dispatchEvent(new Event('auth-change'));
 
         }
 
         catch (err) {
+            setTeamsSaved(false);
             setMessage(err.message || "Error occurred while submitting team selection.");
         } finally {
             setSubmit(false);
@@ -290,15 +297,20 @@ const TeamSelection = () => {
                         role="alertdialog"
                         aria-modal="true"
                         aria-labelledby="team-selection-message"
-                        className="w-full max-w-md rounded-2xl border border-purple-400/30 bg-[#12101f] p-6 text-center shadow-[0_0_40px_rgba(168,85,247,0.2)]"
+                        className="w-full max-w-md rounded-2xl border border-purple-400/30 bg-[#12101f] p-6 text-center shadow-[0_0_40px_rgba(168,85,247,0.2)] whitespace-pre-line"
                     >
-                        <p id="team-selection-message" className="text-base leading-relaxed text-purple-100">
+                        <p id="team-selection-message" className="text-base leading-relaxed text-purple-100 whitespace-pre-line">
                             {message}
                         </p>
                         <button
                             type="button"
-                            onClick={() => setMessage("")}
-                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500"
+                            onClick={() => {
+                                setMessage("");
+                                if (teamsSaved) {
+                                    navigate('/');
+                                }
+                            }}
+                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500 whitespace-pre-line cursor-pointer"
                         >
                             Go
                         </button>

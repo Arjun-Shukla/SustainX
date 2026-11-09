@@ -89,6 +89,7 @@ function AppContent() {
     <div className="min-h-screen bg-[#080B0B] text-white">
 
       <Header
+        user={user}
         onUserChange={setUser}
         isMobileMenuOpen={isMobileMenuOpen}
         onMobileMenuToggle={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
@@ -107,7 +108,7 @@ function AppContent() {
             <Route path="/" element={
 
               <>
-                <Hero />
+                <Hero user={user} />
 
                 <Servicebar />
 
@@ -120,7 +121,16 @@ function AppContent() {
 
             <Route path="/join" element={<RequireAuth><Join /></RequireAuth>} />
 
-            <Route path="/select" element={<Select />} />
+            <Route
+              path="/select"
+              element={
+                <Select
+                  onTeamsSelected={(plan, teamsSelected) => setUser((currentUser) => (
+                    currentUser ? { ...currentUser, plan, teamsSelected } : currentUser
+                  ))}
+                />
+              }
+            />
 
             <Route path="/login" element={<Login />} />
 

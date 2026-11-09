@@ -10,7 +10,10 @@ const join = router.post("/join", authCheck , async (req, res) => {
 
   try {
 
-    const planData = await plan.create(joinData);
+    const planData = await plan.create({
+      ...joinData,
+      userId: req.userId,
+    });
 
     return res.status(201).json({
 

@@ -92,6 +92,7 @@ const Join = () => {
             }
 
             sessionStorage.setItem('selectedPlanId', data.planId);
+            sessionStorage.setItem('selectedPlan', selectedPlan);
             setPlanSaved(true);
             setMessage('Plan selected successfully.');
         } catch (err) {

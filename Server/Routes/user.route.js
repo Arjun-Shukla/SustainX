@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../Models/user.model');
+const Subscription = require('../Models/subscription.model');
 const authCheck = require('../Middlewares/authcheck.middleware');
 
 const router = express.Router();
@@ -15,12 +16,21 @@ router.get('/users', authCheck, async (req, res) => {
             });
         }
 
+        const subscription = await Subscription.findOne({
+            userId: req.userId,
+        })
+            .sort({ teamsSelected: -1, _id: -1 })
+            .select('plan teamsSelected');
+
+        res.set('Cache-Control', 'no-store');
         return res.status(200).json({
             success: true,
             user: {
                 id: user._id,
                 firstName: user.firstName || user.name?.trim().split(/\s+/)[0] || '',
                 email: user.email,
+                plan: subscription?.plan || null,
+                teamsSelected: subscription?.teamsSelected || false,
             },
         });
     } catch (err) {

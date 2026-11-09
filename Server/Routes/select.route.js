@@ -1,10 +1,11 @@
 const express = require("express");
 const plan = require("../Models/subscription.model");
 const mongoose = require("mongoose");
+const authCheck = require("../Middlewares/authcheck.middleware");
 
 const router = express.Router();
 
-const select = router.post("/select", async (req, res) => {
+const select = router.post("/select", authCheck, async (req, res) => {
   const { planId, teams, contributionHours } = req.body || {};
 
   if (!mongoose.isValidObjectId(planId)) {
@@ -15,12 +16,13 @@ const select = router.post("/select", async (req, res) => {
   }
 
   try {
-    const teamData = await plan.findByIdAndUpdate(
-      planId,
+    const teamData = await plan.findOneAndUpdate(
+      { _id: planId, userId: req.userId },
       {
         $set: {
           teams,
           contributionHours,
+          teamsSelected: true,
         },
       },
       {
@@ -32,7 +34,7 @@ const select = router.post("/select", async (req, res) => {
     if (!teamData) {
       return res.status(404).json({
         success: false,
-        message: "The selected plan was not found.",
+        message: "The selected plan was not found for this account.",
       });
     }
 
@@ -40,6 +42,8 @@ const select = router.post("/select", async (req, res) => {
 
       success: true,
       message: "Team Selection Successfull",
+      plan: teamData.plan,
+      teamsSelected: teamData.teamsSelected,
 
     });
 

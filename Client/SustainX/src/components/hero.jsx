@@ -1,8 +1,9 @@
 import logo from "../assets/sustainx-logo.png";
+import { Check } from 'lucide-react';
 import { NavLink } from 'react-router-dom'
 
 
-const Hero = () => {
+const Hero = ({ user }) => {
 
     return (
 
@@ -61,15 +62,26 @@ const Hero = () => {
 
                     {/* Call to action */}
                     <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
-                        <NavLink
-                            to="/join"
-                            className="group inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-7 py-3.5 font-semibold text-white shadow-[0_0_25px_rgba(168,85,247,0.2)] transition duration-300 hover:-translate-y-1 hover:bg-purple-500 hover:shadow-[0_0_35px_rgba(168,85,247,0.4)]"
-                        >
-                            Discover SustainX
-                            <span className="transition-transform duration-300 group-hover:translate-x-1">
-                                →
-                            </span>
-                        </NavLink>
+                        {user?.teamsSelected ? (
+                            <button
+                                type="button"
+                                disabled
+                                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-emerald-400/40 bg-emerald-500/15 px-7 py-3.5 font-semibold text-emerald-300 shadow-[0_0_25px_rgba(16,185,129,0.12)]"
+                            >
+                                Discover SustainX
+                                <Check size={19} strokeWidth={2.5} />
+                            </button>
+                        ) : (
+                            <NavLink
+                                to="/join"
+                                className="group inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-7 py-3.5 font-semibold text-white shadow-[0_0_25px_rgba(168,85,247,0.2)] transition duration-300 hover:-translate-y-1 hover:bg-purple-500 hover:shadow-[0_0_35px_rgba(168,85,247,0.4)]"
+                            >
+                                Discover SustainX
+                                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                                    →
+                                </span>
+                            </NavLink>
+                        )}
 
                     </div>
 

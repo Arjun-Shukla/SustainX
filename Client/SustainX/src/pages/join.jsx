@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Check, Rocket, Zap, Crown, ArrowRight } from "lucide-react";
-import { useForm } from "react-hook-form";
 
 const plans = [
     {
@@ -64,6 +63,7 @@ const Join = () => {
         try {
             const response = await fetch('/api/join', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },

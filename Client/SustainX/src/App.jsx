@@ -1,7 +1,7 @@
 import './App.css'
 import './index.css'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import Header from './components/header'
 import Navbar from './components/Navbar-aside'
 import Hero from './components/hero'
@@ -13,6 +13,56 @@ import Join from './pages/join'
 import Select from './pages/select'
 import Login from './pages/login'
 import Signup from './pages/signup'
+
+function RequireAuth({ children }) {
+  const [status, setStatus] = useState('loading')
+  const location = useLocation()
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetch('/api/users', {
+      credentials: 'include',
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (response.status === 401 || response.status === 403) {
+          setStatus('unauthenticated')
+          return
+        }
+
+        if (!response.ok) {
+          throw new Error('Unable to verify your login. Please try again.')
+        }
+
+        return response.json().then((data) => {
+          setStatus(data.success ? 'authenticated' : 'unauthenticated')
+        })
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          console.error('Failed to verify login:', error)
+          setStatus('error')
+        }
+      })
+
+    return () => controller.abort()
+  }, [])
+
+  if (status === 'loading') {
+    return <p className="py-12 text-center text-gray-300">Checking your login...</p>
+  }
+
+  if (status === 'unauthenticated') {
+    return <Navigate to="/login" replace state={{ from: location }} />
+  }
+
+  if (status === 'error') {
+    return <p role="alert" className="py-12 text-center text-red-300">Unable to verify your login. Please reload and try again.</p>
+  }
+
+  return children
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -57,7 +107,7 @@ function AppContent() {
             } />
             <Route path="/teams" element={<Teams />} />
 
-            <Route path="/join" element={<Join />} />
+            <Route path="/join" element={<RequireAuth><Join /></RequireAuth>} />
 
             <Route path="/select" element={<Select />} />
 

@@ -1,7 +1,5 @@
 import logo from "../assets/sustainx-logo.png";
-import React from "react";
-import { Trophy, Network, Code2, ArrowUpRight } from 'lucide-react';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 
 const Hero = () => {
@@ -73,12 +71,6 @@ const Hero = () => {
                             </span>
                         </NavLink>
 
-                        {/* <a
-                            href="#teams"
-                            className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-7 py-3.5 font-semibold text-gray-300 transition duration-300 hover:border-purple-400/40 hover:bg-purple-500/[0.08] hover:text-white"
-                        >
-                            Explore Our Teams
-                        </a> */}
                     </div>
 
                     {/* Bottom accent */}
@@ -92,7 +84,7 @@ const Hero = () => {
 
                 </div>
 
-                
+
 
 
             </section>

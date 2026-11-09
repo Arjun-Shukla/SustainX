@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LockKeyhole, UserRound, ArrowRight } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -8,6 +8,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [submit, setSubmit] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -38,7 +39,7 @@ const Login = () => {
             if (data.success || data.message?.toLowerCase().includes('login successful')) {
                 window.dispatchEvent(new Event('auth-change'));
                 alert('Login successful');
-                navigate('/');
+                navigate(location.state?.from || '/');
             } else {
                 throw new Error(data?.message || 'Login failed');
             }

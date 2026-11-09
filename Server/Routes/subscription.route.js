@@ -1,9 +1,10 @@
 const express = require("express");
 const plan = require("../Models/subscription.model");
+const authCheck = require('../Middlewares/authcheck.middleware');
 
 const router = express.Router();
 
-const join = router.post("/join", async (req, res) => {
+const join = router.post("/join", authCheck , async (req, res) => {
 
   const joinData = req.body;
 

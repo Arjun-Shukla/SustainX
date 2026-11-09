@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 
 const subSchema = new mongoose.Schema({
 
-    plan : String
+    plan : String,
+    teams : Array,
+    contributionHours : String
 
 });
 

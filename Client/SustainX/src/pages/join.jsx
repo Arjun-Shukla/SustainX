@@ -83,6 +83,11 @@ const Join = () => {
                 throw new Error(data?.message || 'Failed to save selected plan');
             }
 
+            if (!data.planId) {
+                throw new Error('The server did not return the saved plan ID.');
+            }
+
+            sessionStorage.setItem('selectedPlanId', data.planId);
             alert('Plan Selected');
             navigate('/select');
         } catch (err) {

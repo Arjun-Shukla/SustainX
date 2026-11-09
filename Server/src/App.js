@@ -3,6 +3,7 @@ const DBConnect = require('../Config/db');
 const signupRoute = require('../Routes/signup.route');
 const loginRoute = require('../Routes/login.route');
 const SubRoute = require('../Routes/subscription.route');
+const SelectRoute = require('../Routes/select.route');
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.get('/', (req, res) => {
 app.use('/api', signupRoute);
 app.use('/api' , loginRoute);
 app.use('/api' , SubRoute);
+app.use('/api' , SelectRoute);
 
 module.exports = app;

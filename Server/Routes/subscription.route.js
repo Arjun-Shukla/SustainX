@@ -15,6 +15,7 @@ const join = router.post("/join", async (req, res) => {
 
       success: true,
       message: "Plan Created Successfully",
+      planId: planData._id,
       plan: {
         plan: planData.plan,
       },
@@ -31,6 +32,8 @@ const join = router.post("/join", async (req, res) => {
     });
 
   }
+
+  return planData;
 
 });
 

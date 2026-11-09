@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Check, Users, Clock, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const teams = [
     "MERN Stack Team",
@@ -24,7 +25,7 @@ const contributionHours = [
 const TeamSelection = () => {
     const [selectedTeams, setSelectedTeams] = useState([]);
     const [selectedHours, setSelectedHours] = useState("");
-    const [submit , setSubmit] = useState(false);
+    const [submit, setSubmit] = useState(false);
 
     const handleTeamSelection = (team) => {
         setSelectedTeams((prev) =>
@@ -34,7 +35,9 @@ const TeamSelection = () => {
         );
     };
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (selectedTeams.length === 0) {
@@ -50,26 +53,46 @@ const TeamSelection = () => {
         setSubmit(true);
 
         const formData = {
+
+            planId: sessionStorage.getItem('selectedPlanId'),
             teams: selectedTeams,
             contributionHours: selectedHours,
+
         };
 
-        fetch('/select', {
+        try {
 
-            method: "POST",
+            const response = await fetch('/api/select', {
 
-            headers: {
+                method: "POST",
 
-                "Content-Type": "application/json"
-            },
+                headers: {
 
-            body: JSON.stringify(formData)
+                    "Content-Type": "application/json"
+                },
 
-        })
+                body: JSON.stringify(formData)
 
-        console.log("SustainX Registration:", formData);
+            });
 
-        // Connect your backend/API here.
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Unable to submit team selection.");
+            }
+
+            sessionStorage.removeItem('selectedPlanId');
+            alert("Team Selection Successfull");
+            navigate('/');
+
+        }
+
+        catch (err) {
+            alert(err.message || "Error occurred while submitting team selection.");
+        } finally {
+            setSubmit(false);
+        }
+
     };
 
     return (

@@ -1,8 +1,15 @@
-const app = require('./src/App');
+const app = require("./src/App");
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://your-frontend.vercel.app"],
+    credentials: true,
+  }),
+);
 
 const url = `127.0.0.1:80`;
 
-app.listen(80 , () => {
-
-    console.log( `App Running on ${url} Successfully`);
+app.listen(80, () => {
+  console.log(`App Running on ${url} Successfully`);
 });

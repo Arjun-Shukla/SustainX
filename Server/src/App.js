@@ -7,8 +7,21 @@ const SelectRoute = require('../Routes/select.route');
 const UserRoute = require('../Routes/user.route');
 const logOutRoute = require('../Routes/logout.route');
 const cookieParser = require('cookie-parser');
+const cors = require("cors");
 
 const app = express();
+
+app.set("trust proxy", 1);
+
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://sustain-x-uxtv-nu.vercel.app"
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

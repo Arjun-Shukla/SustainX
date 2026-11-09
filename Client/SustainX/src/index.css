@@ -11,6 +11,15 @@
   }
 }
 
+@keyframes account-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;

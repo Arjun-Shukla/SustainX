@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Check, Users, Clock, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,7 @@ const TeamSelection = () => {
     const [selectedTeams, setSelectedTeams] = useState([]);
     const [selectedHours, setSelectedHours] = useState("");
     const [submit, setSubmit] = useState(false);
+    const [message, setMessage] = useState("");
 
     const handleTeamSelection = (team) => {
         setSelectedTeams((prev) =>
@@ -41,12 +42,12 @@ const TeamSelection = () => {
         e.preventDefault();
 
         if (selectedTeams.length === 0) {
-            alert("Please select at least one team.");
+            setMessage("Please select at least one team.");
             return;
         }
 
         if (!selectedHours) {
-            alert("Please select your weekly contribution hours.");
+            setMessage("Please select your weekly contribution hours.");
             return;
         }
 
@@ -82,13 +83,12 @@ const TeamSelection = () => {
             }
 
             sessionStorage.removeItem('selectedPlanId');
-            alert("Team Selection Successfull");
             navigate('/');
 
         }
 
         catch (err) {
-            alert(err.message || "Error occurred while submitting team selection.");
+            setMessage(err.message || "Error occurred while submitting team selection.");
         } finally {
             setSubmit(false);
         }
@@ -250,26 +250,59 @@ const TeamSelection = () => {
                 {/* Submit Button */}
                 <div className="flex justify-center pb-8">
 
-                    {submit ? <div>Loading</div> : ""}
-
                     <button
                         type="button"
                         onClick={handleSubmit}
                         disabled={submit}
-                        className="group flex items-center justify-center gap-3 px-14 py-4 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold text-lg shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 cursor-pointer"
+                        aria-busy={submit}
+                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 px-14 py-4 text-lg font-bold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] disabled:cursor-wait disabled:opacity-80"
                     >
-                        Submit
+                        {submit ? "Submitting..." : "Submit"}
 
                         <ArrowRight
                             size={21}
-                            className="group-hover:translate-x-1 transition-transform"
+                            className={`transition-transform group-hover:translate-x-1 ${submit ? "invisible" : ""}`}
                         />
 
+                        {submit && (
+                            <span
+                                role="progressbar"
+                                aria-label="Submitting team selection"
+                                className="absolute inset-x-0 bottom-0 h-1 overflow-hidden bg-white/20"
+                            >
+                                <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
+                            </span>
+                        )}
                     </button>
 
                 </div>
 
             </div>
+
+            {message && (
+                <div
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
+                    role="presentation"
+                >
+                    <div
+                        role="alertdialog"
+                        aria-modal="true"
+                        aria-labelledby="team-selection-message"
+                        className="w-full max-w-md rounded-2xl border border-purple-400/30 bg-[#12101f] p-6 text-center shadow-[0_0_40px_rgba(168,85,247,0.2)]"
+                    >
+                        <p id="team-selection-message" className="text-base leading-relaxed text-purple-100">
+                            {message}
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => setMessage("")}
+                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500"
+                        >
+                            Go
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

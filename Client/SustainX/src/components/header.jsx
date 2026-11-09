@@ -1,9 +1,9 @@
-import { LogIn } from 'lucide-react';
+import { LogIn, Menu, X } from 'lucide-react';
 import logo from '../assets/sustainx-logo.png'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
-const Header = () => {
+const Header = ({ isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
     const [user, setUser] = useState(null);
 
@@ -21,15 +21,24 @@ const Header = () => {
                     if (response.status !== 401) {
                         throw new Error(`Failed to load user (${response.status}).`);
                     }
-                    if (isMounted) setUser(null);
+                    if (isMounted) {
+                        setUser(null);
+                        onUserChange(null);
+                    }
                     return;
                 }
 
                 const data = await response.json();
-                if (isMounted) setUser(data.user);
+                if (isMounted) {
+                    setUser(data.user);
+                    onUserChange(data.user);
+                }
             } catch (err) {
                 console.error("Unable to load the logged-in user:", err);
-                if (isMounted) setUser(null);
+                if (isMounted) {
+                    setUser(null);
+                    onUserChange(null);
+                }
             }
         };
 
@@ -39,7 +48,7 @@ const Header = () => {
             isMounted = false;
             window.removeEventListener('auth-change', fetchUser);
         };
-    }, []);
+    }, [onUserChange]);
 
     const handleLogOut = async () => {
         try {
@@ -54,6 +63,7 @@ const Header = () => {
             }
 
             setUser(null);
+            onUserChange(null);
             window.dispatchEvent(new Event('auth-change'));
             alert(data.message);
         } catch (err) {
@@ -95,40 +105,45 @@ const Header = () => {
 
                     {/* {right} */}
 
-                    {
+                    <div className="flex items-center gap-2">
+                        {
+                            user ? <button
+                                className="group flex max-w-24 items-center gap-2 truncate rounded-xl border border-purple-400/40 bg-purple-500/10 px-2 py-2.5 text-xs font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer sm:max-w-none sm:px-5 sm:text-sm"
+                                onClick={handleLogOut}
+                            >
+                                <LogIn
+                                    size={18}
+                                    strokeWidth={2}
+                                    className="hidden shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 sm:block"
+                                />
+                                <span className="truncate">{user.firstName || user.name || 'Account'}</span>
+                            </button> :
 
-                        user ? <button
-                            className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
-                            onClick={handleLogOut}
+                                <NavLink to="/login" className="hidden sm:block">
+                                    <button
+                                        className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
+                                    >
+                                        <LogIn
+                                            size={18}
+                                            strokeWidth={2}
+                                            className="transition-transform duration-300 group-hover:translate-x-0.5"
+                                        />
+                                        <span>Login</span>
+                                    </button>
+                                </NavLink>
+                        }
+
+                        <button
+                            type="button"
+                            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                            aria-expanded={isMobileMenuOpen}
+                            aria-controls="mobile-navigation"
+                            onClick={onMobileMenuToggle}
+                            className="rounded-lg border border-purple-500/30 p-2 text-purple-200 transition hover:bg-purple-500/10 sm:hidden"
                         >
-                            <LogIn
-                                size={18}
-                                strokeWidth={2}
-                                className="transition-transform duration-300 group-hover:translate-x-0.5"
-                            />
-                            <span> Welcome {user.firstName} </span>
-                        </button> :
-
-                            <NavLink to="/login">
-                                <button
-                                    className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
-                                >
-                                    <LogIn
-                                        size={18}
-                                        strokeWidth={2}
-                                        className="transition-transform duration-300 group-hover:translate-x-0.5"
-                                    />
-                                    <span>Login</span>
-                                </button>
-
-
-                            </NavLink>
-
-
-                    }
-
-
-
+                            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                        </button>
+                    </div>
 
                 </div>
             </header>

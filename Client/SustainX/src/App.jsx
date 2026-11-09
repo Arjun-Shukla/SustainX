@@ -81,16 +81,26 @@ function ScrollToTop() {
 function AppContent() {
 
   const location = useLocation()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [user, setUser] = useState(null)
 
   return (
     <div className="min-h-screen bg-[#080B0B] text-white">
 
-      <Header />
+      <Header
+        onUserChange={setUser}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onMobileMenuToggle={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+      />
 
-      <Navbar />
+      <Navbar
+        user={user}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onMobileMenuClose={() => setIsMobileMenuOpen(false)}
+      />
 
-      <main className="min-h-[calc(100vh-104px)] overflow-x-hidden overflow-y-hidden lg:pl-64">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main className="min-h-[calc(100vh-104px)] w-full min-w-0 overflow-x-hidden pt-16 lg:pl-64 lg:pt-0">
+        <div className="mx-auto w-full min-w-0 max-w-7xl px-4 sm:px-6 lg:px-8">
           <Routes location={location} key={location.pathname}>
 
             <Route path="/" element={

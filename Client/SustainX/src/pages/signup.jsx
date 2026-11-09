@@ -7,9 +7,10 @@ import {
     MapPin,
     ArrowRight,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -21,6 +22,7 @@ const Signup = () => {
     });
 
     const [submit, setSubmit] = useState(false);
+    const [message, setMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,11 +66,11 @@ const Signup = () => {
             }
 
             console.log('User created:', data?.user);
-            alert('Account created successfully');
-            setSubmit(false);
+            setMessage('Account created successfully.');
         } catch (error) {
             console.error('Signup error:', error);
-            alert(error.message || 'Something went wrong while creating your account');
+            setMessage(error.message || 'Something went wrong while creating your account');
+        } finally {
             setSubmit(false);
         }
     };
@@ -204,23 +206,61 @@ const Signup = () => {
                             );
                         })}
 
-                        {submit ? <div>Creating Account</div> : ""}
-
                         {/* Create Account Button */}
                         <button
                             type="submit"
                             disabled={submit}
-                            className="group w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 shadow-lg shadow-purple-900/30 transition-all duration-300 hover:shadow-purple-700/30 hover:-translate-y-0.5 mt-3 cursor-pointer"
+                            aria-busy={submit}
+                            className="group relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 py-3.5 font-semibold text-white shadow-lg shadow-purple-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-purple-700/30 disabled:cursor-wait disabled:opacity-80 cursor-pointer"
                         >
-                            Create Account
+                            {submit ? 'Creating Account...' : 'Create Account'}
                             <ArrowRight
                                 size={18}
-                                className="transition-transform group-hover:translate-x-1"
+                                className={`transition-transform group-hover:translate-x-1 ${submit ? 'invisible' : ''}`}
                             />
+                            {submit && (
+                                <span
+                                    role="progressbar"
+                                    aria-label="Creating account"
+                                    className="absolute inset-x-0 bottom-0 h-1 overflow-hidden bg-white/20"
+                                >
+                                    <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
+                                </span>
+                            )}
                         </button>
 
                     </form>
                 </div>
+
+                {message && (
+                    <div
+                        className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
+                        role="presentation"
+                    >
+                        <div
+                            role="alertdialog"
+                            aria-modal="true"
+                            aria-labelledby="signup-message"
+                            className="w-full max-w-md rounded-2xl border border-purple-400/30 bg-[#12101f] p-6 text-center shadow-[0_0_40px_rgba(168,85,247,0.2)]"
+                        >
+                            <p id="signup-message" className="text-base leading-relaxed text-purple-100">
+                                {message}
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setMessage("");
+                                    if (message === 'Account created successfully.') {
+                                        navigate('/login');
+                                    }
+                                }}
+                                className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500 cursor-pointer"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Login Redirect */}
                 <p className="text-center text-sm text-gray-400 mt-6">

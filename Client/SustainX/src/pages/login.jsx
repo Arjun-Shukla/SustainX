@@ -7,6 +7,8 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submit, setSubmit] = useState(false);
+    const [message, setMessage] = useState("");
+    const [loginSucceeded, setLoginSucceeded] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -37,15 +39,15 @@ const Login = () => {
             }
 
             if (data.success || data.message?.toLowerCase().includes('login successful')) {
-                window.dispatchEvent(new Event('auth-change'));
-                alert('Login successful');
-                navigate(location.state?.from || '/');
+                setLoginSucceeded(true);
+                setMessage('Login successful.');
             } else {
                 throw new Error(data?.message || 'Login failed');
             }
 
         } catch (err) {
-            alert(err.message || 'Error logging in');
+            setLoginSucceeded(false);
+            setMessage(err.message || 'Error logging in');
         } finally {
             setSubmit(false);
         }
@@ -127,23 +129,62 @@ const Login = () => {
                             </div>
                         </div>
 
-                        {submit ? <div>Loging In</div> : ""}
-
                         {/* Login Button */}
                         <button
                             type="submit"
                             disabled={submit}
-                            className="group w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 shadow-lg shadow-purple-900/30 transition-all duration-300 hover:shadow-purple-700/30 hover:-translate-y-0.5 cursor-pointer"
+                            aria-busy={submit}
+                            className="group relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 py-3.5 font-semibold text-white shadow-lg shadow-purple-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-purple-700/30 disabled:cursor-wait disabled:opacity-80"
                         >
-                            Login Now
+                            {submit ? 'Logging In...' : 'Login Now'}
                             <ArrowRight
                                 size={18}
-                                className="transition-transform group-hover:translate-x-1"
+                                className={`transition-transform group-hover:translate-x-1 ${submit ? 'invisible' : ''}`}
                             />
+                            {submit && (
+                                <span
+                                    role="progressbar"
+                                    aria-label="Logging in"
+                                    className="absolute inset-x-0 bottom-0 h-1 overflow-hidden bg-white/20"
+                                >
+                                    <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
+                                </span>
+                            )}
                         </button>
 
                     </form>
                 </div>
+
+                {message && (
+                    <div
+                        className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
+                        role="presentation"
+                    >
+                        <div
+                            role="alertdialog"
+                            aria-modal="true"
+                            aria-labelledby="login-message"
+                            className="w-full max-w-md rounded-2xl border border-purple-400/30 bg-[#12101f] p-6 text-center shadow-[0_0_40px_rgba(168,85,247,0.2)]"
+                        >
+                            <p id="login-message" className="text-base leading-relaxed text-purple-100">
+                                {message}
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setMessage("");
+                                    if (loginSucceeded) {
+                                        window.dispatchEvent(new Event('auth-change'));
+                                        navigate(location.state?.from || '/');
+                                    }
+                                }}
+                                className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 <p className="text-center text-xs text-gray-600 mt-7">
                     © 2026 SustainX. Build. Collaborate. Compete. Grow.

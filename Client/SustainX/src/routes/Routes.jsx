@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Hero from '../components/hero'
 import Servicebar from '../components/service-bar'
-import Achievements from '../components/Achievements'
+import Achievements from '../components/achievements'
 import Join from '../pages/join'
 import TeamSelection from '../pages/select'
 import Login from '../pages/login'

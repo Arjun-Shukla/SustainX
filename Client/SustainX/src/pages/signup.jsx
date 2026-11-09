@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     UserRound,
     Mail,
@@ -7,14 +7,12 @@ import {
     MapPin,
     ArrowRight,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const Signup = () => {
-    // const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         mobile: "",
         password: "",
@@ -55,7 +53,9 @@ const Signup = () => {
                     data = JSON.parse(text);
                 } catch (parseError) {
                     console.error('Non-JSON response received:', text);
-                    throw new Error('Server returned an invalid response. Check if the backend is running.');
+                    throw new Error('Server returned an invalid response. Check if the backend is running.', {
+                        cause: parseError,
+                    });
                 }
             }
 
@@ -78,12 +78,20 @@ const Signup = () => {
 
     const fields = [
         {
-            name: "name",
-            label: "Full Name",
-            placeholder: "Enter your full name",
+            name: "firstName",
+            label: "First Name",
+            placeholder: "Enter your first name",
             type: "text",
             icon: UserRound,
-            autoComplete: "name",
+            autoComplete: "given-name",
+        },
+        {
+            name: "lastName",
+            label: "Last Name",
+            placeholder: "Enter your last name",
+            type: "text",
+            icon: UserRound,
+            autoComplete: "family-name",
         },
         {
             name: "email",

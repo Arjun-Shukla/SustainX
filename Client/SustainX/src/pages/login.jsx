@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { LockKeyhole, UserRound, ArrowRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,7 @@ const Login = () => {
             }
 
             if (data.success || data.message?.toLowerCase().includes('login successful')) {
+                window.dispatchEvent(new Event('auth-change'));
                 alert('Login successful');
                 navigate('/');
             } else {

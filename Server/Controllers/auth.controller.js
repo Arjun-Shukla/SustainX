@@ -34,7 +34,7 @@ const login = async (req, res) => {
             message: 'Login successful',
             user: {
                 id: user._id,
-                name: user.name,
+                firstName: user.firstName || user.name?.trim().split(/\s+/)[0] || '',
                 email: user.email,
             },
         });
@@ -43,6 +43,8 @@ const login = async (req, res) => {
         console.error('Login error:', err);
         return res.status(500).json({ message: 'Error occurred while logging in' });
     }
+
+    return user;
 };
 
 module.exports = login;

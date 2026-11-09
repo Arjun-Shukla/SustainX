@@ -1,9 +1,67 @@
-import react from 'react'
 import { LogIn } from 'lucide-react';
 import logo from '../assets/sustainx-logo.png'
 import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const Header = () => {
+
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const fetchUser = async () => {
+            try {
+                const response = await fetch('/api/users', {
+                    method: "GET",
+                    credentials: "include"
+                });
+
+                if (!response.ok) {
+                    if (response.status !== 401) {
+                        throw new Error(`Failed to load user (${response.status}).`);
+                    }
+                    if (isMounted) setUser(null);
+                    return;
+                }
+
+                const data = await response.json();
+                if (isMounted) setUser(data.user);
+            } catch (err) {
+                console.error("Unable to load the logged-in user:", err);
+                if (isMounted) setUser(null);
+            }
+        };
+
+        fetchUser();
+        window.addEventListener('auth-change', fetchUser);
+        return () => {
+            isMounted = false;
+            window.removeEventListener('auth-change', fetchUser);
+        };
+    }, []);
+
+    const handleLogOut = async () => {
+        try {
+            const response = await fetch('/api/logout', {
+                method: "GET",
+                credentials: "include"
+            });
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || `Logout failed (${response.status}).`);
+            }
+
+            setUser(null);
+            window.dispatchEvent(new Event('auth-change'));
+            alert(data.message);
+        } catch (err) {
+            console.error("Unable to log out:", err);
+            alert(err.message || "Error logging out");
+        }
+    }
+
 
     return (
         <>
@@ -37,22 +95,39 @@ const Header = () => {
 
                     {/* {right} */}
 
+                    {
 
-                    <NavLink to="/login">
-
-                        <button
+                        user ? <button
                             className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
+                            onClick={handleLogOut}
                         >
                             <LogIn
                                 size={18}
                                 strokeWidth={2}
                                 className="transition-transform duration-300 group-hover:translate-x-0.5"
                             />
-                            <span>Login</span>
-                        </button>
+                            <span> Welcome {user.firstName} </span>
+                        </button> :
+
+                            <NavLink to="/login">
+                                <button
+                                    className="group flex items-center gap-2 rounded-xl border border-purple-400/40 bg-purple-500/10 px-5 py-2.5 text-sm font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer"
+                                >
+                                    <LogIn
+                                        size={18}
+                                        strokeWidth={2}
+                                        className="transition-transform duration-300 group-hover:translate-x-0.5"
+                                    />
+                                    <span>Login</span>
+                                </button>
 
 
-                    </NavLink>
+                            </NavLink>
+
+
+                    }
+
+
 
 
                 </div>

@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 DBConnect();
 
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
     res.send('Healthy');
 });
 

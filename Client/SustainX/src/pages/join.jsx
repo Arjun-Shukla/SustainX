@@ -3,6 +3,7 @@ import { apiUrl } from "../api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Check, Rocket, Zap, Crown, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
+import SustainXLoader from "../components/SustainXLoader";
 
 const plans = [
     {
@@ -226,24 +227,16 @@ const Join = () => {
                     onClick={handleNext}
                     disabled={submit}
                     aria-busy={submit}
-                    className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 px-16 py-4 text-lg font-bold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] disabled:cursor-wait disabled:opacity-70"
+                    className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 px-16 py-4 text-lg font-bold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] disabled:cursor-wait disabled:opacity-70 cursor-pointer"
                 >
                     {submit ? 'Saving Plan...' : 'Next'}
                     <ArrowRight
                         size={22}
                         className={`transition-transform group-hover:translate-x-1 ${submit ? 'invisible' : ''}`}
                     />
-                    {submit && (
-                        <span
-                            role="progressbar"
-                            aria-label="Saving selected plan"
-                            className="absolute inset-x-0 bottom-0 h-1 overflow-hidden bg-white/20"
-                        >
-                            <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
-                        </span>
-                    )}
                 </button>
 
+                <SustainXLoader isLoading={submit} />
             </div>
 
             {message && (
@@ -268,7 +261,7 @@ const Join = () => {
                                     navigate('/select');
                                 }
                             }}
-                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500"
+                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500 cursor-pointer"
                         >
                             Go
                         </button>

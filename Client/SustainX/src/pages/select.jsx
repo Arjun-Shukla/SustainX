@@ -2,6 +2,7 @@ import { useState } from "react";
 import { apiUrl } from "../api";
 import { Check, Users, Clock, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SustainXLoader from "../components/SustainXLoader";
 
 const teams = [
     "MERN Stack Team",
@@ -264,7 +265,7 @@ const TeamSelection = ({ onTeamsSelected = () => {} }) => {
                         onClick={handleSubmit}
                         disabled={submit}
                         aria-busy={submit}
-                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 px-14 py-4 text-lg font-bold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] disabled:cursor-wait disabled:opacity-80"
+                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 px-14 py-4 text-lg font-bold text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] disabled:cursor-wait disabled:opacity-80 cursor-pointer"
                     >
                         {submit ? "Submitting..." : "Submit"}
 
@@ -273,17 +274,9 @@ const TeamSelection = ({ onTeamsSelected = () => {} }) => {
                             className={`transition-transform group-hover:translate-x-1 ${submit ? "invisible" : ""}`}
                         />
 
-                        {submit && (
-                            <span
-                                role="progressbar"
-                                aria-label="Submitting team selection"
-                                className="absolute inset-x-0 bottom-0 h-1 overflow-hidden bg-white/20"
-                            >
-                                <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
-                            </span>
-                        )}
                     </button>
 
+                    <SustainXLoader isLoading={submit} />
                 </div>
 
             </div>

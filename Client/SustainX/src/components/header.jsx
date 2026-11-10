@@ -3,6 +3,7 @@ import { apiUrl } from '../api';
 import logo from '../assets/sustainx-logo.png'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import SustainXLoader from './SustainXLoader';
 
 const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) => {
 
@@ -97,13 +98,13 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
         <>
 
             <header className="sticky top-0 z-50 border-b border-purple-500/20 bg-[#080B0B]/95 backdrop-blur-xl">
-                <div className="relative mx-auto flex h-20 w-full items-center justify-between px-5 sm:px-8">
+                <div className="relative mx-auto flex h-20 w-full items-center justify-between gap-2 px-3 sm:px-8">
 
                     {/* {left} */}
 
                     <NavLink
                         to="/"
-                        className="flex h-18 w-18 shrink-0 items-center overflow-hidden rounded-2xl border border-purple-500/30"
+                        className="flex h-12 w-12 shrink-0 items-center overflow-hidden rounded-2xl border border-purple-500/30 sm:h-18 sm:w-18"
                     >
                         <img
                             src={logo}
@@ -114,7 +115,7 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
 
                     {/* {center} */}
 
-                    <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-2xl font-extrabold tracking-tight sm:text-3xl">
+                    <div className="min-w-0 flex-1 whitespace-nowrap text-center text-lg font-extrabold tracking-tight sm:text-3xl">
 
                         <span className="text-white">Sustain</span>
                         <span className="text-purple-400 drop-shadow-[0_0_12px_rgba(168,85,247,0.5)]">
@@ -125,13 +126,13 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
 
                     {/* {right} */}
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex shrink-0 items-center gap-1 sm:gap-2">
                         {
                             user ? <>
                                 {planTier && (
                                     <span
                                         title={planLabel}
-                                        className={`max-w-[5.5rem] truncate rounded-lg border px-2 py-2 text-[9px] font-bold tracking-wide sm:max-w-none sm:px-3 sm:text-xs sm:tracking-wider ${planColors[planTier]}`}
+                                        className={`max-w-[3.5rem] truncate rounded-lg border px-1.5 py-2 text-[8px] font-bold tracking-wide sm:max-w-none sm:px-3 sm:text-xs sm:tracking-wider ${planColors[planTier]}`}
                                     >
                                         {planLabel}
                                     </span>
@@ -140,7 +141,7 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
                                 type="button"
                                 disabled={logoutSubmitting}
                                 aria-busy={logoutSubmitting}
-                                className="group flex max-w-24 items-center gap-2 truncate rounded-xl border border-purple-400/40 bg-purple-500/10 px-2 py-2.5 text-xs font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer sm:max-w-none sm:px-5 sm:text-sm"
+                                className="group flex max-w-14 items-center gap-2 truncate rounded-xl border border-purple-400/40 bg-purple-500/10 px-1.5 py-2.5 text-[10px] font-semibold text-purple-200 transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] cursor-pointer sm:max-w-none sm:px-5 sm:text-sm"
                                 onClick={handleLogOut}
                             >
                                 <LogIn
@@ -150,15 +151,6 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
                                 />
                                 <span className="relative truncate">
                                     {logoutSubmitting ? "Logging out..." : user.firstName || user.name || 'Account'}
-                                    {logoutSubmitting && (
-                                        <span
-                                            role="progressbar"
-                                            aria-label="Logging out"
-                                            className="absolute inset-x-0 -bottom-2 h-1 overflow-hidden bg-white/20"
-                                        >
-                                            <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
-                                        </span>
-                                    )}
                                 </span>
                                 </button>
                             </> :
@@ -191,6 +183,7 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
 
                 </div>
             </header>
+            <SustainXLoader isLoading={logoutSubmitting} />
             {logoutMessage && (
                 <div
                     className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
@@ -208,7 +201,7 @@ const Header = ({ user, isMobileMenuOpen, onMobileMenuToggle, onUserChange }) =>
                         <button
                             type="button"
                             onClick={() => setLogoutMessage("")}
-                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500"
+                            className="mt-6 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-2.5 font-semibold text-white transition hover:from-purple-500 hover:to-fuchsia-500 cursor-pointer"
                         >
                             Go
                         </button>

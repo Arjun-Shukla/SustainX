@@ -1,0 +1,116 @@
+.sustainx-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #000000;
+}
+
+.sustainx-loader__art {
+  position: relative;
+  width: min(184px, calc(100vw - 3rem));
+  aspect-ratio: 782 / 388;
+}
+
+.sustainx-loader__logo,
+.sustainx-loader__animation {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sustainx-loader__logo {
+  object-fit: contain;
+  filter: url(#sustainx-loader-purple-image);
+}
+
+.sustainx-loader__animation {
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sustainx-loader__travel {
+  fill: none;
+  stroke-dasharray: 11 89;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.sustainx-loader__travel--wide {
+  stroke: #7e22ce;
+  stroke-width: 13;
+  filter: url(#sustainx-loader-wide-glow);
+}
+
+.sustainx-loader__travel--soft {
+  stroke: #a855f7;
+  stroke-width: 7;
+  filter: url(#sustainx-loader-soft-glow);
+}
+
+.sustainx-loader__travel--core {
+  stroke: #e9d5ff;
+  stroke-width: 2.8;
+}
+
+.sustainx-loader__travel--left {
+  animation-name: sustainx-loader-left-trace;
+}
+
+.sustainx-loader__travel--right {
+  animation-name: sustainx-loader-right-trace;
+}
+
+@keyframes sustainx-loader-left-trace {
+  0%,
+  2% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  46% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+@keyframes sustainx-loader-right-trace {
+  0%,
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+
+  54% {
+    opacity: 1;
+  }
+
+  96% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}

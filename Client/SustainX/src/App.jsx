@@ -14,6 +14,7 @@ import Join from './pages/join'
 import Select from './pages/select'
 import Login from './pages/login'
 import Signup from './pages/signup'
+import SustainXLoader from './components/SustainXLoader'
 
 function RequireAuth({ children }) {
   const [status, setStatus] = useState('loading')
@@ -50,19 +51,16 @@ function RequireAuth({ children }) {
     return () => controller.abort()
   }, [])
 
-  if (status === 'loading') {
-    return <p className="py-12 text-center text-gray-300">Checking your login...</p>
-  }
-
-  if (status === 'unauthenticated') {
-    return <Navigate to="/login" replace state={{ from: location }} />
-  }
-
-  if (status === 'error') {
-    return <p role="alert" className="py-12 text-center text-red-300">Unable to verify your login. Please reload and try again.</p>
-  }
-
-  return children
+  return (
+    <>
+      <SustainXLoader isLoading={status === 'loading'} />
+      {status === 'unauthenticated' ? (
+        <Navigate to="/login" replace state={{ from: location }} />
+      ) : status === 'error' ? (
+        <p role="alert" className="py-12 text-center text-red-300">Unable to verify your login. Please reload and try again.</p>
+      ) : status === 'authenticated' ? children : null}
+    </>
+  )
 }
 
 function ScrollToTop() {

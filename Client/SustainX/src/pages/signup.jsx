@@ -9,6 +9,7 @@ import {
     ArrowRight,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import SustainXLoader from "../components/SustainXLoader";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -219,18 +220,10 @@ const Signup = () => {
                                 size={18}
                                 className={`transition-transform group-hover:translate-x-1 ${submit ? 'invisible' : ''}`}
                             />
-                            {submit && (
-                                <span
-                                    role="progressbar"
-                                    aria-label="Creating account"
-                                    className="absolute inset-x-0 bottom-0 h-1 overflow-hidden bg-white/20"
-                                >
-                                    <span className="block h-full w-1/3 animate-[account-progress_1.4s_ease-in-out_infinite] bg-gradient-to-r from-purple-200 via-white to-fuchsia-200" />
-                                </span>
-                            )}
                         </button>
 
                     </form>
+                    <SustainXLoader isLoading={submit} />
                 </div>
 
                 {message && (

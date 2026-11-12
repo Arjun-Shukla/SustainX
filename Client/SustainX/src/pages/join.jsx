@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { apiUrl } from "../api";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Check, Rocket, Zap, Crown, ArrowRight } from "lucide-react";
-import { useForm } from "react-hook-form";
 import SustainXLoader from "../components/SustainXLoader";
 
 const plans = [
@@ -139,82 +138,88 @@ const Join = () => {
                         <div
                             key={plan.id}
                             onClick={() => setSelectedPlan(plan.id)}
-                            className={`relative cursor-pointer rounded-3xl p-7 border transition-all duration-300 flex flex-col min-h-[390px]
-                ${isSelected
+                            role="group"
+                            aria-label={`${plan.name} subscription plan, coming soon`}
+                            className={`relative cursor-pointer rounded-3xl border p-7 flex flex-col min-h-[390px] transition-all duration-300 ${
+                                isSelected
                                     ? "border-purple-500 bg-purple-950/30 shadow-[0_0_35px_rgba(168,85,247,0.25)] scale-[1.02]"
                                     : "border-white/10 bg-white/[0.03] hover:border-purple-400/50 hover:bg-white/[0.06]"
-                                }`}
+                            }`}
                         >
+                            <div aria-hidden="true" className="pointer-events-none select-none blur-[5px]">
+                                {/* Popular Badge */}
+                                {plan.popular && (
+                                    <div className="absolute -top-4 right-6 bg-gradient-to-r from-purple-600 to-fuchsia-500 px-5 py-2 rounded-full text-sm font-semibold shadow-lg">
+                                        ✦ Most Popular
+                                    </div>
+                                )}
 
-                            {/* Popular Badge */}
-                            {plan.popular && (
-                                <div className="absolute -top-4 right-6 bg-gradient-to-r from-purple-600 to-fuchsia-500 px-5 py-2 rounded-full text-sm font-semibold shadow-lg">
-                                    ✦ Most Popular
+                                {/* Plan Icon */}
+                                <div className="flex items-center gap-4 mb-7">
+                                    <div className="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-400/20 flex items-center justify-center">
+                                        <Icon size={27} className="text-purple-300" />
+                                    </div>
+
+                                    <div>
+                                        <h2 className="text-xl font-bold">
+                                            {plan.name}
+                                        </h2>
+                                        <p className="text-gray-400 text-sm mt-1">
+                                            {plan.tagline}
+                                        </p>
+                                    </div>
                                 </div>
-                            )}
 
-                            {/* Plan Icon */}
-                            <div className="flex items-center gap-4 mb-7">
-                                <div className="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-400/20 flex items-center justify-center">
-                                    <Icon size={27} className="text-purple-300" />
+                                {/* Price */}
+                                <div className="mb-7">
+                                    <span className="text-4xl font-bold">
+                                        ₹{plan.price}
+                                    </span>
+                                    <span className="text-purple-300 ml-2">
+                                        / month
+                                    </span>
                                 </div>
 
-                                <div>
-                                    <h2 className="text-xl font-bold">
-                                        {plan.name}
-                                    </h2>
-                                    <p className="text-gray-400 text-sm mt-1">
-                                        {plan.tagline}
-                                    </p>
-                                </div>
-                            </div>
+                                <div className="h-px bg-white/10 mb-7" />
 
-                            {/* Price */}
-                            <div className="mb-7">
-                                <span className="text-4xl font-bold">
-                                    ₹{plan.price}
-                                </span>
-                                <span className="text-purple-300 ml-2">
-                                    / month
-                                </span>
-                            </div>
+                                {/* Features */}
+                                <ul className="space-y-5 flex-1">
+                                    {plan.features.map((feature, index) => (
+                                        <li
+                                            key={index}
+                                            className="flex items-start gap-3 text-gray-200 text-sm md:text-base"
+                                        >
+                                            <span className="w-6 h-6 shrink-0 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-600 flex items-center justify-center">
+                                                <Check size={15} strokeWidth={3} />
+                                            </span>
 
-                            <div className="h-px bg-white/10 mb-7" />
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
 
-                            {/* Features */}
-                            <ul className="space-y-5 flex-1">
-                                {plan.features.map((feature, index) => (
-                                    <li
-                                        key={index}
-                                        className="flex items-start gap-3 text-gray-200 text-sm md:text-base"
-                                    >
-                                        <span className="w-6 h-6 shrink-0 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-600 flex items-center justify-center">
-                                            <Check size={15} strokeWidth={3} />
-                                        </span>
-
-                                        <span>{feature}</span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {/* Selection Indicator */}
-                            <div className="mt-7 flex items-center gap-2 text-sm">
-                                <div
-                                    className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected
-                                        ? "border-purple-400 bg-purple-500"
-                                        : "border-gray-500"
+                                {/* Selection Indicator */}
+                                <div className="mt-7 flex items-center gap-2 text-sm">
+                                    <div
+                                        className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                                            isSelected
+                                                ? "border-purple-400 bg-purple-500"
+                                                : "border-gray-500"
                                         }`}
-                                >
-                                    {isSelected && (
-                                        <Check size={11} strokeWidth={3} />
-                                    )}
+                                    >
+                                        {isSelected && <Check size={11} strokeWidth={3} />}
+                                    </div>
+                                    <span className={isSelected ? "text-purple-300" : "text-gray-500"}>
+                                        {isSelected ? "Selected Plan" : "Select this plan"}
+                                    </span>
                                 </div>
-
-                                <span className={isSelected ? "text-purple-300" : "text-gray-500"}>
-                                    {isSelected ? "Selected Plan" : "Select this plan"}
-                                </span>
                             </div>
 
+                            <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-3xl bg-[#080611]/45 backdrop-blur-[4px]">
+                                <span className="rounded-full border border-purple-300/40 bg-purple-950/80 px-6 py-3 text-lg font-bold uppercase tracking-widest text-purple-100 shadow-[0_0_30px_rgba(168,85,247,0.3)]">
+                                    Coming Soon
+                                </span>
+                            </div>
                         </div>
                     );
                 })}
@@ -268,7 +273,6 @@ const Join = () => {
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

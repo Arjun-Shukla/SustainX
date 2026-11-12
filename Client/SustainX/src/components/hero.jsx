@@ -21,8 +21,8 @@ const Hero = ({ user }) => {
 
                 {/* Hero content */}
                 <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center">
+{/* 
 
-                    {/* Logo */}
                     <div className="group relative mb-8">
                         <div className="absolute inset-0 rounded-3xl bg-purple-500/20 blur-2xl transition duration-500 group-hover:bg-purple-500/35" />
 
@@ -31,7 +31,7 @@ const Hero = ({ user }) => {
                             alt="SustainX community logo"
                             className="relative h-28 w-28 rounded-3xl border border-purple-400/30 object-contain shadow-[0_0_35px_rgba(168,85,247,0.12)] transition duration-500 group-hover:scale-105 sm:h-36 sm:w-36"
                         />
-                    </div>
+                    </div> */}
 
                     {/* Small label */}
                     <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-purple-400/20 px-4 py-2">

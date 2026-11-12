@@ -7,6 +7,7 @@ import Header from './components/header'
 import Navbar from './components/Navbar-aside'
 import Hero from './components/hero'
 import Servicebar from './components/service-bar'
+import NetworkStats from './components/NetworkStats'
 import Achievements from './components/achievements'
 import Footer from './components/footer'
 import Teams from './pages/teams'
@@ -109,6 +110,8 @@ function AppContent() {
                 <Hero user={user} />
 
                 <Servicebar />
+
+                <NetworkStats />
 
                 <Achievements />
 

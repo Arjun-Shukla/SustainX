@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Hero from '../components/hero'
 import Servicebar from '../components/service-bar'
+import NetworkStats from '../components/NetworkStats'
 import Achievements from '../components/achievements'
 import Join from '../pages/join'
 import TeamSelection from '../pages/select'
@@ -15,6 +16,7 @@ const Router = createBrowserRouter([
       <>
         <Hero />
         <Servicebar />
+        <NetworkStats />
         <Achievements />
         {/* <Join />
         <TeamSelection />

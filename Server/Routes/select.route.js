@@ -1,5 +1,6 @@
 const express = require("express");
 const plan = require("../Models/subscription.model");
+const User = require("../Models/user.model");
 const mongoose = require("mongoose");
 const authCheck = require("../Middlewares/authcheck.middleware");
 
@@ -16,6 +17,16 @@ const select = router.post("/select", authCheck, async (req, res) => {
   }
 
   try {
+    const user = await User.findById(req.userId).select("firstName lastName name email mobile");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "The logged-in user was not found.",
+      });
+    }
+
+    const userName = user.name?.trim() || [user.firstName, user.lastName].filter(Boolean).join(" ");
     const teamData = await plan.findOneAndUpdate(
       { _id: planId, userId: req.userId },
       {
@@ -23,6 +34,9 @@ const select = router.post("/select", authCheck, async (req, res) => {
           teams,
           contributionHours,
           teamsSelected: true,
+          userName,
+          userEmail: user.email,
+          userMobile: user.mobile,
         },
       },
       {
@@ -44,6 +58,9 @@ const select = router.post("/select", authCheck, async (req, res) => {
       message: "Team Selection Successfull",
       plan: teamData.plan,
       teamsSelected: teamData.teamsSelected,
+      userName: teamData.userName,
+      userEmail: teamData.userEmail,
+      userMobile: teamData.userMobile,
 
     });
 

@@ -8,6 +8,18 @@ const subSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+    userName: {
+        type: String,
+        trim: true,
+    },
+    userEmail: {
+        type: String,
+        trim: true,
+    },
+    userMobile: {
+        type: String,
+        trim: true,
+    },
     teams : Array,
     contributionHours : String,
     teamsSelected: {

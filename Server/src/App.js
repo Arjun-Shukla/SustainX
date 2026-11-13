@@ -15,7 +15,10 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://sustain-x-uxtv-nu.vercel.app"],
+    origin: [
+    "https://sustainx.in",
+    "https://www.sustainx.in"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
